@@ -6,13 +6,13 @@ The bounded, single-host database-effect contract survived the tested failures.
 That is not a production-readiness certificate. The separate 100 requests/s run
 was only 60 seconds on one laptop, with 50% creates, short simulated work and no
 process faults. There is no authentication, queue admission limit, storage/host
-failover, backup/restore exercise, production monitoring or container-runtime proof.
+failover, backup/restore exercise or production monitoring.
 An external training/upload effect would require a different end-to-end contract.
 
 First steps before production:
 
-1. Execute the provided Docker entry point in CI/the target environment. Exercise
-   volume permissions, restart persistence, database restore and full-host failure.
+1. Exercise database restore and full-host failure on the target storage. The
+   Docker Compose smoke test confirms startup and basic restart persistence in CI.
 2. Define the actual request mix and completion/queue-age SLOs. Add a bounded queue,
    admission/backpressure and metrics for queue age, reclaims, rejected stale
    completions, lock waits and errors. Run a long soak plus saturation tests with
@@ -146,9 +146,9 @@ read/write traffic; it cannot be extrapolated to 100 new long-running jobs/s.
 
 - They do not prove arbitrary schedules, unbounded liveness or absence of every race.
   Repeating three seeds increases evidence, not a probabilistic correctness guarantee.
-- SQLite operations and worker crashes were tested on macOS. Docker/Linux filesystem,
-  volume and shutdown behaviour were not executed here. Schema validation is not
-  a Docker build or a successful `docker compose up`.
+- The chaos and load campaigns ran as macOS processes. A separate Docker Compose
+  smoke test ran on Ubuntu 24.04. That run checks the Docker entry point and basic
+  restart persistence. It does not repeat the fault campaign inside containers.
 - There is no power-cut, disk-full, corruption/restore, filesystem failure, network
   partition, database-host loss, API-crash or rolling-migration campaign. Returning
   a committed response across a severed client connection is not explicitly fault-
@@ -171,8 +171,13 @@ Earlier test/lint/type-check output, including the failing regression, is retain
 under `evidence/verification/`. The final suite includes intentional exception tests;
 those expected faults are not test failures.
 
-Compose validates against the official schema and configures four replicas:
-[validation output](../evidence/verification/compose-schema.txt). It was not started.
+Docker Compose passed a smoke test on Ubuntu 24.04 in GitHub Actions. The
+workflow built the image, started the API and four worker containers, submitted
+a job and observed `succeeded` with generation 1. It stopped and restarted the
+stack with the named volume intact, then replayed the same POST. The API returned
+HTTP 200 with the original job ID and `succeeded` state. The workflow and source
+used by this run are in commit `ec7518a`.
+[Raw CI log](../evidence/verification/compose-smoke-ci.txt).
 All source modules remain below 200 non-comment, nonblank lines. Request models
 parse untrusted input at the API boundary; SQLite rows are parsed into typed domain
 models; the state transition dispatch is exhaustive. Raw SQLite and JSON observations

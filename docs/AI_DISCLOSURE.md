@@ -17,7 +17,7 @@ cancellation pattern masked that path. The harness was updated to protect jobs
 abandoned by killed workers and require observed reclaims. The report retains
 the original output and explains both changes.
 
-Codex executed the checks shipped in this archive. The results establish what
-ran in the local macOS environment. The Compose file was checked against the
-official schema. Building and running the containers was not verified in that
-environment.
+Codex executed the checks shipped in this archive. The main test campaigns ran
+as local macOS processes. A separate GitHub Actions run on Ubuntu verified Docker
+Compose startup, four workers, job completion and idempotent replay after a stack
+restart. The report links to the raw output.

@@ -7,7 +7,7 @@ CPU execution or exactly-once effects in an external service.
 
 **Production verdict at 100 requests/second: DON'T SHIP.** The implementation has
 real failure evidence, but host/storage failure recovery, production capacity,
-operational controls and the Docker execution environment still need validation.
+and operational controls still need validation.
 See [the evidence report](docs/REPORT.md) for measurements and concrete next steps.
 
 ## Start
@@ -29,12 +29,12 @@ docker compose up --scale worker=8
 docker compose down
 ```
 
-The Compose configuration is provided for the required entry point. Docker was
-not installed in the preparation environment; a container build/start is **not
-claimed as verified**. The HTTP service, workers and fault injection were executed
-as real macOS processes using the checked-in dependency lock. Use a local named
-volume for SQLite; do not put this WAL database on NFS or distribute its processes
-across hosts.
+The Docker Compose smoke test passed on Ubuntu 24.04 in GitHub Actions.
+It built and started the API and four workers, completed a job, then stopped
+and restarted the stack. Replaying the same request returned the same completed
+job. See [the CI log](evidence/verification/compose-smoke-ci.txt). The larger
+chaos and load campaigns ran as native macOS processes. Keep the SQLite WAL
+database on a local volume shared by processes on the same host.
 
 Local alternative (Python 3.13 and [uv](https://docs.astral.sh/uv/getting-started/installation/)):
 
