@@ -1,0 +1,45 @@
+[project]
+name = "soup-training-queue"
+version = "0.1.0"
+description = "Failure-tested single-host training job queue"
+requires-python = ">=3.13,<3.14"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "pydantic>=2.10,<3", "pydantic-settings>=2.7,<3", "structlog>=25,<27", "typer>=0.15,<1"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1", "basedpyright>=1.28,<2", "httpx2[http2,brotli,zstd]>=0.28,<3", "anyio>=4,<5"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "ISC001", "D203", "D213", "D100", "D104", "D107", "D102", "D103", "D101", "D105", "D106", "FBT001", "FBT002", "FBT003", "TD002", "TD003", "FIX002", "CPY001", "N818"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "PLR2004", "D", "ARG001"]
+"harness/*" = ["T201", "S311", "S603", "PLR2004", "TRY003", "EM101", "EM102"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20 # The independent oracle enumerates invariants; the API factory nests routes.
+
+[tool.ruff.lint.pylint]
+max-statements = 65
+
+[tool.basedpyright]
+typeCheckingMode = "all"
+pythonVersion = "3.13"
+include = ["soup_queue", "harness", "tests"]
+exclude = ["**/__pycache__"]
+reportUnusedCallResult = false # sqlite cursor methods and pytest helpers return deliberately unused values.
+reportImplicitOverride = false # Pydantic model_config is the documented framework extension point.
+
+reportImplicitStringConcatenation = false # Wrapped SQL literals are intentional.
+reportUnnecessaryComparison = false # Exhaustive match ends in assert_never.

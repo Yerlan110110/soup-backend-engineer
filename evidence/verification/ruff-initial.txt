@@ -1,0 +1,727 @@
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/__init__.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/chaos.py:1:1
+
+E501 Line too long (118 > 100)
+  --> outputs/soup-queue/harness/chaos.py:31:101
+   |
+30 | async def run(config: ChaosConfig) -> None:
+31 |     directory = config.output.resolve() / f"chaos-{datetime.now(UTC):%Y%m%dT%H%M%SZ}-s{config.seed}-{uuid4().hex[:6]}"
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^
+32 |     directory.mkdir(parents=True)
+33 |     source_manifest(directory)
+   |
+
+E501 Line too long (150 > 100)
+  --> outputs/soup-queue/harness/chaos.py:36:101
+   |
+34 | …
+35 | …
+36 | …nfig.workers, seed=config.seed, timeout=config.timeout, kill_interval=config.kill_interval)
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 | …
+38 | …
+   |
+
+E501 Line too long (117 > 100)
+  --> outputs/soup-queue/harness/chaos.py:42:101
+   |
+40 |         except BaseException as exc:
+41 |             # Top-level evidence boundary: record failures/cancellation, then re-raise unchanged.
+42 |             evidence.emit("FAIL", exception=type(exc).__name__, error=str(exc), elapsed_s=time.monotonic() - started)
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+43 |             raise
+   |
+
+C901 `scenario` is too complex (13 > 10)
+  --> outputs/soup-queue/harness/chaos.py:46:11
+   |
+46 | async def scenario(config: ChaosConfig, directory: Path, evidence: Evidence) -> None:
+   |           ^^^^^^^^
+47 |     kills: list[int] = []
+48 |     started = time.monotonic()
+   |
+
+PLR0915 Too many statements (51 > 50)
+  --> outputs/soup-queue/harness/chaos.py:46:11
+   |
+46 | async def scenario(config: ChaosConfig, directory: Path, evidence: Evidence) -> None:
+   |           ^^^^^^^^
+47 |     kills: list[int] = []
+48 |     started = time.monotonic()
+   |
+
+E501 Line too long (180 > 100)
+  --> outputs/soup-queue/harness/chaos.py:74:101
+   |
+72 | …
+73 | …er.db_path)
+74 | …e.active, effects=state.effects, attempts=state.attempts, duplicates=traffic.duplicates, kills=len(kills))
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+75 | …state.active == 0:
+76 | …
+   |
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/chaos.py:88:27
+   |
+86 |             for job in page.items:
+87 |                 if job.id in seen:
+88 |                     raise HarnessViolation(f"Pagination repeated job {job.id}")
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+89 |                 seen.add(job.id)
+90 |             if page.next_cursor is None:
+   |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+  --> outputs/soup-queue/harness/chaos.py:88:44
+   |
+86 |             for job in page.items:
+87 |                 if job.id in seen:
+88 |                     raise HarnessViolation(f"Pagination repeated job {job.id}")
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+89 |                 seen.add(job.id)
+90 |             if page.next_cursor is None:
+   |
+help: Assign to variable; remove f-string literal
+   |
+87 |                 if job.id in seen:
+   -                     raise HarnessViolation(f"Pagination repeated job {job.id}")
+88 +                     msg = f"Pagination repeated job {job.id}"
+89 +                     raise HarnessViolation(msg)
+90 |                 seen.add(job.id)
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/chaos.py:94:19
+   |
+92 |             cursor = page.next_cursor
+93 |         if len(seen) != config.jobs or seen != set(traffic.ids.values()):
+94 |             raise HarnessViolation("Pagination did not return every acknowledged job")
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+95 |         failures = await anyio.to_thread.run_sync(verify, cluster.db_path, config.jobs, traffic.cancelled)
+96 |         if failures:
+   |
+
+EM101 Exception must not use a string literal, assign to variable first
+  --> outputs/soup-queue/harness/chaos.py:94:36
+   |
+92 |             cursor = page.next_cursor
+93 |         if len(seen) != config.jobs or seen != set(traffic.ids.values()):
+94 |             raise HarnessViolation("Pagination did not return every acknowledged job")
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+95 |         failures = await anyio.to_thread.run_sync(verify, cluster.db_path, config.jobs, traffic.cancelled)
+96 |         if failures:
+   |
+help: Assign to variable; remove string literal
+   |
+93 |         if len(seen) != config.jobs or seen != set(traffic.ids.values()):
+   -             raise HarnessViolation("Pagination did not return every acknowledged job")
+94 +             msg = "Pagination did not return every acknowledged job"
+95 +             raise HarnessViolation(msg)
+96 |         failures = await anyio.to_thread.run_sync(verify, cluster.db_path, config.jobs, traffic.cancelled)
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (106 > 100)
+  --> outputs/soup-queue/harness/chaos.py:95:101
+   |
+93 |         if len(seen) != config.jobs or seen != set(traffic.ids.values()):
+94 |             raise HarnessViolation("Pagination did not return every acknowledged job")
+95 |         failures = await anyio.to_thread.run_sync(verify, cluster.db_path, config.jobs, traffic.cancelled)
+   |                                                                                                     ^^^^^^
+96 |         if failures:
+97 |             (directory / "failures.json").write_text(json.dumps(failures, indent=2))
+   |
+
+E501 Line too long (165 > 100)
+   --> outputs/soup-queue/harness/chaos.py:100:101
+    |
+ 98 | …
+ 99 | …_path)
+100 | …licates == 0 or traffic.running_cancels == 0 or state.attempts <= state.succeeded + state.failed):
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+101 | …nning-cancel coverage")
+102 | …eeded, failed=state.failed, cancelled=state.cancelled, effects=state.effects, attempts=state.attempts, duplicate_posts=traffic.dupli…
+    |
+
+TRY003 Avoid specifying long messages outside the exception class
+   --> outputs/soup-queue/harness/chaos.py:101:19
+    |
+ 99 | …     state = await anyio.to_thread.run_sync(snapshot, cluster.db_path)
+100 | …     if config.jobs >= 10_000 and (len(kills) < 5 or traffic.duplicates == 0 or traffic.running_cancels == 0 or state.attempts <= st…
+101 | …         raise HarnessViolation("Insufficient fault/duplicate/running-cancel coverage")
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+102 | …     evidence.emit("PASS", jobs=state.jobs, succeeded=state.succeeded, failed=state.failed, cancelled=state.cancelled, effects=state…
+    |
+
+EM101 Exception must not use a string literal, assign to variable first
+   --> outputs/soup-queue/harness/chaos.py:101:36
+    |
+ 99 | …     state = await anyio.to_thread.run_sync(snapshot, cluster.db_path)
+100 | …     if config.jobs >= 10_000 and (len(kills) < 5 or traffic.duplicates == 0 or traffic.running_cancels == 0 or state.attempts <= st…
+101 | …         raise HarnessViolation("Insufficient fault/duplicate/running-cancel coverage")
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+102 | …     evidence.emit("PASS", jobs=state.jobs, succeeded=state.succeeded, failed=state.failed, cancelled=state.cancelled, effects=state…
+    |
+help: Assign to variable; remove string literal
+    |
+100 |         if config.jobs >= 10_000 and (len(kills) < 5 or traffic.duplicates == 0 or traffic.running_cancels == 0 or state.attempts <= state.succeeded + state.failed):
+    -             raise HarnessViolation("Insufficient fault/duplicate/running-cancel coverage")
+101 +             msg = "Insufficient fault/duplicate/running-cancel coverage"
+102 +             raise HarnessViolation(msg)
+103 |         evidence.emit("PASS", jobs=state.jobs, succeeded=state.succeeded, failed=state.failed, cancelled=state.cancelled, effects=state.effects, attempts=state.attempts, duplicate_posts=traffic.duplicates, cancel_acks=traffic.cancels, running_cancels=traffic.running_cancels, cancel_conflicts=traffic.conflicts, transient_errors=traffic.transient_errors, kills=len(kills), elapsed_s=time.monotonic() - started, invariants="all checked")
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (436 > 100)
+   --> outputs/soup-queue/harness/chaos.py:102:101
+    |
+100 | …ing_cancels == 0 or state.attempts <= state.succeeded + state.failed):
+101 | …
+102 | …cancelled=state.cancelled, effects=state.effects,…tonic() - started, invariants="all checked")
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+PLR0913 Too many arguments in function definition (6 > 5)
+   --> outputs/soup-queue/harness/chaos.py:105:5
+    |
+105 | def main(
+    |     ^^^^
+106 |     jobs: int = 10_000,
+107 |     workers: int = 8,
+    |
+
+PLR0917 Too many positional arguments (6 > 5)
+   --> outputs/soup-queue/harness/chaos.py:105:5
+    |
+105 | def main(
+    |     ^^^^
+106 |     jobs: int = 10_000,
+107 |     workers: int = 8,
+    |
+
+TRY003 Avoid specifying long messages outside the exception class
+   --> outputs/soup-queue/harness/chaos.py:114:15
+    |
+112 | ) -> None:
+113 |     if jobs < 1 or workers < 1 or kill_interval <= 0 or timeout <= 0:
+114 |         raise typer.BadParameter("jobs, workers, timeout and kill interval must be positive")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+115 |     anyio.run(run, ChaosConfig(jobs, workers, seed, timeout, kill_interval, output))
+    |
+
+EM101 Exception must not use a string literal, assign to variable first
+   --> outputs/soup-queue/harness/chaos.py:114:34
+    |
+112 | ) -> None:
+113 |     if jobs < 1 or workers < 1 or kill_interval <= 0 or timeout <= 0:
+114 |         raise typer.BadParameter("jobs, workers, timeout and kill interval must be positive")
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+115 |     anyio.run(run, ChaosConfig(jobs, workers, seed, timeout, kill_interval, output))
+    |
+help: Assign to variable; remove string literal
+    |
+113 |     if jobs < 1 or workers < 1 or kill_interval <= 0 or timeout <= 0:
+    -         raise typer.BadParameter("jobs, workers, timeout and kill interval must be positive")
+114 +         msg = "jobs, workers, timeout and kill interval must be positive"
+115 +         raise typer.BadParameter(msg)
+116 |     anyio.run(run, ChaosConfig(jobs, workers, seed, timeout, kill_interval, output))
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/client.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/cluster.py:1:1
+
+E501 Line too long (121 > 100)
+  --> outputs/soup-queue/harness/cluster.py:35:101
+   |
+33 |     def launch(self, command: list[str], name: str) -> subprocess.Popen[bytes]:
+34 |         log = self.stack.enter_context((self.directory / f"{name}.log").open("wb"))
+35 |         env = os.environ | {"QUEUE_DB": str(self.db_path), "QUEUE_LEASE_MS": str(self.lease_ms), "PYTHONUNBUFFERED": "1"}
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+36 |         proc = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
+37 |         self.processes.append(proc)
+   |
+
+E501 Line too long (104 > 100)
+  --> outputs/soup-queue/harness/cluster.py:42:101
+   |
+40 |     def start_worker(self) -> subprocess.Popen[bytes]:
+41 |         self.generation += 1
+42 |         return self.launch([sys.executable, "-m", "soup_queue.worker"], f"worker-{self.generation:03d}")
+   |                                                                                                     ^^^^
+43 |
+44 |     async def __aenter__(self) -> "Cluster":
+   |
+
+PYI034 `__aenter__` methods in classes like `Cluster` usually return `self` at runtime
+  --> outputs/soup-queue/harness/cluster.py:44:15
+   |
+42 |         return self.launch([sys.executable, "-m", "soup_queue.worker"], f"worker-{self.generation:03d}")
+43 |
+44 |     async def __aenter__(self) -> "Cluster":
+   |               ^^^^^^^^^^
+45 |         # Keep the chosen port reserved until the child inherits its listening socket.
+46 |         with socket.socket() as listener:
+   |
+help: Use `Self` as return type
+   |
+13 | from harness.client import client
+14 + from typing import Self
+15 |
+--------------------------------------------------------------------------------
+44 |
+   -     async def __aenter__(self) -> "Cluster":
+45 +     async def __aenter__(self) -> Self:
+46 |         # Keep the chosen port reserved until the child inherits its listening socket.
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+ASYNC220 Async functions should not create subprocesses with blocking methods
+  --> outputs/soup-queue/harness/cluster.py:51:19
+   |
+49 | …     self.base_url = f"http://127.0.0.1:{listener.getsockname()[1]}"
+50 | …     log = self.stack.enter_context((self.directory / "api.log").open("wb"))
+51 | …     api = subprocess.Popen(
+   |             ^^^^^^^^^^^^^^^^
+52 | …         [sys.executable, "-m", "uvicorn", "soup_queue.api:create_app", "--factory", "--fd", str(listener.fileno()), "--no-access-log…
+53 | …         pass_fds=(listener.fileno(),), stdout=log, stderr=subprocess.STDOUT,
+   |
+
+E501 Line too long (143 > 100)
+  --> outputs/soup-queue/harness/cluster.py:52:101
+   |
+50 | …ory / "api.log").open("wb"))
+51 | …
+52 | …_queue.api:create_app", "--factory", "--fd", str(listener.fileno()), "--no-access-log"],
+   |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+53 | …og, stderr=subprocess.STDOUT,
+54 | …db_path), "PYTHONUNBUFFERED": "1"},
+   |
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/cluster.py:78:19
+   |
+76 |         old = self.workers[slot]
+77 |         if old.poll() is not None:
+78 |             raise ChildProcessError(f"Worker {old.pid} exited unexpectedly: {old.returncode}")
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+79 |         old.kill()  # POSIX SIGKILL, equivalent to kill -9. No graceful handler runs.
+80 |         old.wait(timeout=5)
+   |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+  --> outputs/soup-queue/harness/cluster.py:78:37
+   |
+76 |         old = self.workers[slot]
+77 |         if old.poll() is not None:
+78 |             raise ChildProcessError(f"Worker {old.pid} exited unexpectedly: {old.returncode}")
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+79 |         old.kill()  # POSIX SIGKILL, equivalent to kill -9. No graceful handler runs.
+80 |         old.wait(timeout=5)
+   |
+help: Assign to variable; remove f-string literal
+   |
+77 |         if old.poll() is not None:
+   -             raise ChildProcessError(f"Worker {old.pid} exited unexpectedly: {old.returncode}")
+78 +             msg = f"Worker {old.pid} exited unexpectedly: {old.returncode}"
+79 +             raise ChildProcessError(msg)
+80 |         old.kill()  # POSIX SIGKILL, equivalent to kill -9. No graceful handler runs.
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (128 > 100)
+  --> outputs/soup-queue/harness/cluster.py:97:101
+   |
+95 |         self.stack.close()
+96 |
+97 |     async def __aexit__(self, _kind: type[BaseException] | None, _exc: BaseException | None, _tb: TracebackType | None) -> None:
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+98 |         self.stop()
+   |
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/evidence.py:1:1
+
+E501 Line too long (107 > 100)
+  --> outputs/soup-queue/harness/evidence.py:16:101
+   |
+15 |     def emit(self, event: str, **fields: str | float | bool | None) -> None:
+16 |         line = json.dumps({"utc": datetime.now(UTC).isoformat(), "event": event, **fields}, sort_keys=True)
+   |                                                                                                     ^^^^^^^
+17 |         self.stream.write(line + "\n")
+18 |         self.stream.flush()
+   |
+
+E501 Line too long (176 > 100)
+  --> outputs/soup-queue/harness/evidence.py:24:101
+   |
+22 | …
+23 | …
+24 | …("*.py"), *Path("tests").glob("*.py"), Path("pyproject.toml"), Path("uv.lock"), Path("docs/DESIGN.md")])
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 | …
+26 | …
+   |
+
+PERF401 Use a list comprehension to create a transformed list
+  --> outputs/soup-queue/harness/evidence.py:27:13
+   |
+25 |     for path in paths:
+26 |         if path.is_file():
+27 |             lines.append(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path}")
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 |     (directory / "source.sha256").write_text("\n".join(lines) + "\n")
+29 |     (directory / "environment.json").write_text(json.dumps({"python": platform.python_version(), "os": platform.platform(), "sqlite": …
+   |
+help: Replace for loop with list comprehension
+
+E501 Line too long (176 > 100)
+  --> outputs/soup-queue/harness/evidence.py:29:101
+   |
+27 | …)}  {path}")
+28 | …
+29 | …atform.python_version(), "os": platform.platform(), "sqlite": sqlite3.sqlite_version}, indent=2) + "\n")
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/oracle.py:1:1
+
+E501 Line too long (101 > 100)
+  --> outputs/soup-queue/harness/oracle.py:26:101
+   |
+25 | def spec_for(index: int) -> JobSpec:
+26 |     return JobSpec(duration_ms=30 + index % 41, should_fail=index % 37 == 0, value=f"output-{index}")
+   |                                                                                                     ^
+
+E501 Line too long (102 > 100)
+  --> outputs/soup-queue/harness/oracle.py:42:101
+   |
+40 | def running_id(db_path: Path) -> JobId | None:
+41 |     with closing(sqlite3.connect(db_path)) as conn:
+42 |         row = conn.execute("SELECT id FROM jobs WHERE state='running' ORDER BY id LIMIT 1").fetchone()
+   |                                                                                                     ^^
+43 |         return JobId(TypeAdapter(int).validate_python(row[0])) if row else None
+   |
+
+C901 `verify` is too complex (15 > 10)
+  --> outputs/soup-queue/harness/oracle.py:46:5
+   |
+46 | def verify(db_path: Path, count: int, cancelled: set[JobId]) -> list[str]:
+   |     ^^^^^^
+47 |     failures: list[str] = []
+48 |     with closing(sqlite3.connect(db_path)) as conn:
+   |
+
+PLR0912 Too many branches (14 > 12)
+  --> outputs/soup-queue/harness/oracle.py:46:5
+   |
+46 | def verify(db_path: Path, count: int, cancelled: set[JobId]) -> list[str]:
+   |     ^^^^^^
+47 |     failures: list[str] = []
+48 |     with closing(sqlite3.connect(db_path)) as conn:
+   |
+
+E501 Line too long (107 > 100)
+  --> outputs/soup-queue/harness/oracle.py:65:101
+   |
+63 |             if row["state"] not in ("succeeded", "failed", "cancelled"):
+64 |                 failures.append(f"nonterminal: {job_id}")
+65 |             if row["finished_ms"] is None or row["owner"] is not None or row["lease_until_ms"] is not None:
+   |                                                                                                     ^^^^^^^
+66 |                 failures.append(f"terminal metadata: {job_id}")
+67 |             if (row["state"] == "succeeded") != (effect is not None):
+   |
+
+E501 Line too long (115 > 100)
+  --> outputs/soup-queue/harness/oracle.py:69:101
+   |
+67 |             if (row["state"] == "succeeded") != (effect is not None):
+68 |                 failures.append(f"effect/state disagreement: {job_id}")
+69 |             if effect is not None and (effect["generation"] != row["generation"] or effect["value"] != spec.value):
+   |                                                                                                     ^^^^^^^^^^^^^^^
+70 |                 failures.append(f"stale/wrong effect: {job_id}")
+71 |             if row["state"] == "failed" and (not spec.should_fail or not row["error"]):
+   |
+
+E501 Line too long (115 > 100)
+  --> outputs/soup-queue/harness/oracle.py:82:101
+   |
+80 | …     "duplicate_effect": "SELECT job_id FROM effects GROUP BY job_id HAVING count(*)>1",
+81 | …     "duplicate_key": "SELECT key FROM jobs GROUP BY key HAVING count(*)>1",
+82 | …     "orphan_effect": "SELECT e.job_id FROM effects e LEFT JOIN jobs j ON e.job_id=j.id WHERE j.id IS NULL",
+   |                                                                                               ^^^^^^^^^^^^^^^
+83 | …     "effect_owner": "SELECT e.job_id FROM effects e JOIN attempts a USING(job_id,generation) WHERE e.owner!=a.owner",
+84 | …     "attempt_count": "SELECT j.id FROM jobs j LEFT JOIN attempts a ON j.id=a.job_id GROUP BY j.id HAVING count(a.generation)!=j.gene…
+   |
+
+E501 Line too long (125 > 100)
+  --> outputs/soup-queue/harness/oracle.py:83:101
+   |
+81 | …     "duplicate_key": "SELECT key FROM jobs GROUP BY key HAVING count(*)>1",
+82 | …     "orphan_effect": "SELECT e.job_id FROM effects e LEFT JOIN jobs j ON e.job_id=j.id WHERE j.id IS NULL",
+83 | …     "effect_owner": "SELECT e.job_id FROM effects e JOIN attempts a USING(job_id,generation) WHERE e.owner!=a.owner",
+   |                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+84 | …     "attempt_count": "SELECT j.id FROM jobs j LEFT JOIN attempts a ON j.id=a.job_id GROUP BY j.id HAVING count(a.generation)!=j.gene…
+85 | …     "foreign_key": "PRAGMA foreign_key_check",
+   |
+
+E501 Line too long (195 > 100)
+  --> outputs/soup-queue/harness/oracle.py:84:101
+   |
+82 | …e.job_id=j.id WHERE j.id IS NULL",
+83 | …(job_id,generation) WHERE e.owner!=a.owner",
+84 | …d=a.job_id GROUP BY j.id HAVING count(a.generation)!=j.generation OR coalesce(max(a.generation),0)!=j.generation",
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+85 | …
+86 | …
+   |
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/harness/traffic.py:1:1
+
+N818 Exception name `HarnessViolation` should be named with an Error suffix
+  --> outputs/soup-queue/harness/traffic.py:13:7
+   |
+13 | class HarnessViolation(RuntimeError):
+   |       ^^^^^^^^^^^^^^^^
+14 |     """An observed response contradicts the queue contract."""
+   |
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/traffic.py:46:31
+   |
+44 |                     job = Job.model_validate_json(response.content)
+45 |                     if index in self.ids and self.ids[index] != job.id:
+46 |                         raise HarnessViolation(f"Retry created another job for key {index}")
+   |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 |                     self.ids[index] = job.id
+48 |                     if response.status_code == 200:
+   |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+  --> outputs/soup-queue/harness/traffic.py:46:48
+   |
+44 |                     job = Job.model_validate_json(response.content)
+45 |                     if index in self.ids and self.ids[index] != job.id:
+46 |                         raise HarnessViolation(f"Retry created another job for key {index}")
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 |                     self.ids[index] = job.id
+48 |                     if response.status_code == 200:
+   |
+help: Assign to variable; remove f-string literal
+   |
+45 |                     if index in self.ids and self.ids[index] != job.id:
+   -                         raise HarnessViolation(f"Retry created another job for key {index}")
+46 +                         msg = f"Retry created another job for key {index}"
+47 +                         raise HarnessViolation(msg)
+48 |                     self.ids[index] = job.id
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/traffic.py:56:15
+   |
+54 |             self.transient_errors += 1
+55 |             await anyio.sleep(0.05 * 2**attempt)
+56 |         raise HarnessViolation(f"POST exhausted retries for key {index}")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+57 |
+58 |     async def produce(self) -> None:
+   |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+  --> outputs/soup-queue/harness/traffic.py:56:32
+   |
+54 |             self.transient_errors += 1
+55 |             await anyio.sleep(0.05 * 2**attempt)
+56 |         raise HarnessViolation(f"POST exhausted retries for key {index}")
+   |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+57 |
+58 |     async def produce(self) -> None:
+   |
+help: Assign to variable; remove f-string literal
+   |
+55 |             await anyio.sleep(0.05 * 2**attempt)
+   -         raise HarnessViolation(f"POST exhausted retries for key {index}")
+56 +         msg = f"POST exhausted retries for key {index}"
+57 +         raise HarnessViolation(msg)
+58 |
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+TRY003 Avoid specifying long messages outside the exception class
+  --> outputs/soup-queue/harness/traffic.py:97:23
+   |
+95 |             job = Job.model_validate_json(response.content)
+96 |             if job.state != "cancelled":
+97 |                 raise HarnessViolation(f"Cancel acknowledged wrong state: {job.id}")
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+98 |             if job_id not in self.cancelled:
+99 |                 self.cancels += 1
+   |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+  --> outputs/soup-queue/harness/traffic.py:97:40
+   |
+95 |             job = Job.model_validate_json(response.content)
+96 |             if job.state != "cancelled":
+97 |                 raise HarnessViolation(f"Cancel acknowledged wrong state: {job.id}")
+   |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+98 |             if job_id not in self.cancelled:
+99 |                 self.cancels += 1
+   |
+help: Assign to variable; remove f-string literal
+   |
+96 |             if job.state != "cancelled":
+   -                 raise HarnessViolation(f"Cancel acknowledged wrong state: {job.id}")
+97 +                 msg = f"Cancel acknowledged wrong state: {job.id}"
+98 +                 raise HarnessViolation(msg)
+99 |             if job_id not in self.cancelled:
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+ASYNC110 Use `anyio.Event` instead of awaiting `anyio.sleep` in a `while` loop
+   --> outputs/soup-queue/harness/traffic.py:105:9
+    |
+104 |       async def conflict_probe(self) -> None:
+105 | /         while not self.ids:
+106 | |             await anyio.sleep(0.01)
+    | |___________________________________^
+107 |           index = next(iter(self.ids))
+108 |           response = await self.http.post(
+    |
+
+TRY003 Avoid specifying long messages outside the exception class
+   --> outputs/soup-queue/harness/traffic.py:113:19
+    |
+111 |         )
+112 |         if response.status_code != 409:
+113 |             raise HarnessViolation(f"Conflicting idempotency key returned {response.status_code}")
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+114 |         self.evidence.emit("key_conflict_checked", status=response.status_code)
+    |
+
+EM102 Exception must not use an f-string literal, assign to variable first
+   --> outputs/soup-queue/harness/traffic.py:113:36
+    |
+111 |         )
+112 |         if response.status_code != 409:
+113 |             raise HarnessViolation(f"Conflicting idempotency key returned {response.status_code}")
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+114 |         self.evidence.emit("key_conflict_checked", status=response.status_code)
+    |
+help: Assign to variable; remove f-string literal
+    |
+112 |         if response.status_code != 409:
+    -             raise HarnessViolation(f"Conflicting idempotency key returned {response.status_code}")
+113 +             msg = f"Conflicting idempotency key returned {response.status_code}"
+114 +             raise HarnessViolation(msg)
+115 |         self.evidence.emit("key_conflict_checked", status=response.status_code)
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/__init__.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/api.py:1:1
+
+C901 `create_app` is too complex (11 > 10)
+  --> outputs/soup-queue/soup_queue/api.py:24:5
+   |
+24 | def create_app(settings: Settings | None = None) -> FastAPI:
+   |     ^^^^^^^^^^
+25 |     configure()
+26 |     config = settings or Settings()
+   |
+
+E501 Line too long (154 > 100)
+  --> outputs/soup-queue/soup_queue/api.py:36:101
+   |
+34 | …ONResponse:
+35 | … exc, exc.__traceback__))
+36 | …": "Storage unavailable; retry with the same idempotency key"}, headers={"Retry-After": "1"})
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 | …
+38 | …
+   |
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/config.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/db.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/jobs.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/leases.py:1:1
+
+E501 Line too long (104 > 100)
+  --> outputs/soup-queue/soup_queue/leases.py:57:101
+   |
+55 |             if not claim.spec.should_fail:
+56 |                 conn.execute(
+57 |                     "INSERT INTO effects(job_id,generation,owner,value,committed_ms) VALUES(?,?,?,?,?)",
+   |                                                                                                     ^^^^
+58 |                     (claim.job_id, claim.generation, claim.owner, claim.spec.value, now),
+59 |                 )
+   |
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/logging.py:1:1
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/models.py:1:1
+
+N818 Exception name `MissingJob` should be named with an Error suffix
+  --> outputs/soup-queue/soup_queue/models.py:66:7
+   |
+66 | class MissingJob(Exception):
+   |       ^^^^^^^^^^
+67 |     def __init__(self, job_id: JobId) -> None:
+68 |         super().__init__(job_id)
+   |
+
+N818 Exception name `KeyConflict` should be named with an Error suffix
+  --> outputs/soup-queue/soup_queue/models.py:72:7
+   |
+72 | class KeyConflict(Exception):
+   |       ^^^^^^^^^^^
+73 |     def __init__(self, key: str) -> None:
+74 |         super().__init__(key)
+   |
+
+N818 Exception name `TerminalConflict` should be named with an Error suffix
+  --> outputs/soup-queue/soup_queue/models.py:78:7
+   |
+78 | class TerminalConflict(Exception):
+   |       ^^^^^^^^^^^^^^^^
+79 |     def __init__(self, job_id: JobId, state: State) -> None:
+80 |         super().__init__(job_id, state)
+   |
+
+CPY001 Missing copyright notice at top of file
+--> outputs/soup-queue/soup_queue/worker.py:1:1
+
+E501 Line too long (111 > 100)
+  --> outputs/soup-queue/soup_queue/worker.py:52:101
+   |
+50 |             log.info("job_claimed", job_id=claim.job_id, generation=claim.generation, owner=owner)
+51 |             completed = execute(claim, leases, stop)
+52 |             log.info("attempt_finished", job_id=claim.job_id, generation=claim.generation, committed=completed)
+   |                                                                                                     ^^^^^^^^^^^
+53 |         except sqlite3.OperationalError:
+54 |             log.exception("worker_storage_unavailable", owner=owner)
+   |
+
+Found 82 errors (9 fixed, 73 remaining).
+10 unsafe fixes available with `--fix --unsafe-fixes`.

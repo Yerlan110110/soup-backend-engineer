@@ -1,0 +1,61 @@
+name: Docker Compose smoke test
+on:
+  push:
+    paths:
+      - Dockerfile
+      - compose.yaml
+      - .dockerignore
+      - pyproject.toml
+      - uv.lock
+      - 'soup_queue/**'
+      - .github/workflows/compose-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Build and start the API and default workers
+        run: |
+          docker compose version
+          docker compose up --build --detach --wait --wait-timeout 90
+          docker compose ps
+          test "$(docker compose ps --status running --quiet worker | wc -l)" -eq 4
+      - name: Verify completion, idempotency and persistence
+        run: |
+          api=http://127.0.0.1:8000
+          job="$(curl --fail-with-body --silent --show-error "$api/jobs" \
+            -H 'Content-Type: application/json' \
+            -H 'Idempotency-Key: compose-smoke' \
+            -d '{"duration_ms":50}')"
+          echo "$job" | jq -e '.state == "queued"'
+          job_id="$(echo "$job" | jq -er '.id')"
+          for attempt in {1..20}; do
+            job="$(curl --fail-with-body --silent --show-error "$api/jobs/$job_id")"
+            if echo "$job" | jq -e '.state == "succeeded"' >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          echo "$job" | jq -e '.state == "succeeded" and .generation == 1'
+          docker compose down
+          docker compose up --detach --wait --wait-timeout 90
+          status="$(curl --silent --show-error -o replay.json -w '%{http_code}' "$api/jobs" \
+            -H 'Content-Type: application/json' \
+            -H 'Idempotency-Key: compose-smoke' \
+            -d '{"duration_ms":50}')"
+          test "$status" = 200
+          jq -e --argjson id "$job_id" '.id == $id and .state == "succeeded"' replay.json
+      - name: Collect container logs
+        if: always()
+        run: docker compose logs --no-color
+      - name: Stop test containers
+        if: always()
+        run: docker compose down --volumes

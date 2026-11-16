@@ -1,0 +1,2 @@
+{"event": "start", "jobs": 300, "kill_interval": 0.5, "seed": 40, "timeout": 240.0, "utc": "2026-11-16T11:30:21.035857+00:00", "workers": 8}
+{"elapsed_s": 1.0382169590011472, "error": "unhandled errors in a TaskGroup (1 sub-exception)", "event": "FAIL", "exception": "ExceptionGroup", "utc": "2026-11-16T11:30:22.074237+00:00"}

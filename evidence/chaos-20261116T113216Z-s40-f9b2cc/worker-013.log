@@ -1,0 +1,2 @@
+{"owner": "31853-51264ffcff274cab9e976a6fa49a34c5", "lease_ms": 1000, "event": "worker_started", "level": "info", "timestamp": "2026-11-16T11:32:18.861003Z"}
+{"owner": "31853-51264ffcff274cab9e976a6fa49a34c5", "event": "worker_stopped", "level": "info", "timestamp": "2026-11-16T11:32:20.720263Z"}

@@ -1,0 +1,8 @@
+harness/probes.py:61:16: ASYNC220 Async functions should not create subprocesses with blocking methods
+harness/probes.py:63:12: RUF100 [*] Unused `noqa` directive (unused: `ASYNC220`)
+harness/probes.py:107:13: ASYNC110 Use `anyio.Event` instead of awaiting `anyio.sleep` in a `while` loop
+harness/probes.py:113:13: ASYNC110 Use `anyio.Event` instead of awaiting `anyio.sleep` in a `while` loop
+harness/probes.py:118:13: ASYNC110 Use `anyio.Event` instead of awaiting `anyio.sleep` in a `while` loop
+harness/probes.py:127:17: ASYNC240 Async functions should not perform blocking pathlib.Path operations
+Found 6 errors.
+[*] 1 fixable with `--fix`.

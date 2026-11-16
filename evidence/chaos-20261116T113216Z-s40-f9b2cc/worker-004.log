@@ -1,0 +1,26 @@
+{"owner": "31842-32827caf8907477596a90f7b2df4d170", "lease_ms": 1000, "event": "worker_started", "level": "info", "timestamp": "2026-11-16T11:32:16.551776Z"}
+{"job_id": 5, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.552775Z"}
+{"job_id": 5, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.588477Z"}
+{"job_id": 12, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.589056Z"}
+{"job_id": 12, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.638186Z"}
+{"job_id": 18, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.638660Z"}
+{"job_id": 18, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.692331Z"}
+{"job_id": 26, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.692820Z"}
+{"job_id": 26, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.757886Z"}
+{"job_id": 36, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.759639Z"}
+{"job_id": 36, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.825323Z"}
+{"job_id": 47, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.825846Z"}
+{"job_id": 47, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.896732Z"}
+{"job_id": 55, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.897458Z"}
+{"job_id": 55, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:16.960772Z"}
+{"job_id": 68, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:16.961623Z"}
+{"job_id": 68, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:17.025015Z"}
+{"job_id": 79, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:17.027185Z"}
+{"job_id": 79, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:17.098478Z"}
+{"job_id": 93, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:17.099389Z"}
+{"job_id": 93, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:17.134728Z"}
+{"job_id": 99, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:17.135659Z"}
+{"job_id": 99, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:17.183333Z"}
+{"job_id": 107, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:17.185278Z"}
+{"job_id": 107, "generation": 1, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:32:17.253534Z"}
+{"job_id": 118, "generation": 1, "owner": "31842-32827caf8907477596a90f7b2df4d170", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:32:17.254328Z"}

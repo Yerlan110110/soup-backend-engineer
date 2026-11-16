@@ -1,0 +1,50 @@
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/chaos.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/chaos.py:111:20 - error: Function calls and mutable objects not allowed within parameter default value expression (reportCallInDefaultInitializer)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/evidence.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/evidence.py:27:13 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/evidence.py:28:56 - error: Argument type is partially unknown
+    Argument corresponds to parameter "iterable" in function "join"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/oracle.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/oracle.py:32:13 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/traffic.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness/traffic.py:55:31 - error: Argument type is Any
+    Argument corresponds to parameter "delay" in function "sleep" (reportAny)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/api.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/api.py:31:5 - error: Type of "log" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/api.py:35:9 - error: Type of "error" is Any (reportAny)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/config.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/config.py:8:5 - error: Type annotation for attribute `model_config` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/db.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/db.py:22:6 - error: The function "contextmanager" is deprecated
+    Annotating the return type as `-> Iterator[Foo]` with `@contextmanager` is deprecated. Use `-> Generator[Foo]` instead. (reportDeprecated)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/db.py:30:6 - error: The function "contextmanager" is deprecated
+    Annotating the return type as `-> Iterator[Foo]` with `@contextmanager` is deprecated. Use `-> Generator[Foo]` instead. (reportDeprecated)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/jobs.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/jobs.py:29:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/jobs.py:68:25 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/jobs.py:72:22 - error: Pattern will never be matched for subject type "Never" (reportUnnecessaryComparison)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py:18:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py:24:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py:38:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py:47:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/leases.py:61:17 - error: Implicit string concatenation not allowed (reportImplicitStringConcatenation)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:20:5 - error: Type annotation for attribute `model_config` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:27:5 - error: Type annotation for attribute `model_config` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:42:5 - error: Type annotation for attribute `model_config` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:48:5 - error: Type annotation for attribute `model_config` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:69:14 - error: Type annotation for attribute `job_id` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:75:14 - error: Type annotation for attribute `key` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:81:14 - error: Type annotation for attribute `job_id` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:82:14 - error: Type annotation for attribute `state` is required because this class is not decorated with `@final` (reportUnannotatedClassAttribute)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:32:5 - error: Type of "log" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:43:5 - error: Type of "info" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:50:13 - error: Type of "info" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:52:13 - error: Type of "info" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:54:13 - error: Type of "exception" is Any (reportAny)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/worker.py:56:5 - error: Type of "info" is Any (reportAny)
+32 errors, 0 warnings, 0 notes

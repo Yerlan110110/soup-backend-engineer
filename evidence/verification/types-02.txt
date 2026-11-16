@@ -1,0 +1,8 @@
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/config.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/config.py:8:5 - error: Instance variable "model_config" overrides class variable of same name in class "BaseSettings" (reportIncompatibleVariableOverride)
+/Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:20:5 - error: Instance variable "model_config" overrides class variable of same name in class "BaseModel" (reportIncompatibleVariableOverride)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:27:5 - error: Instance variable "model_config" overrides class variable of same name in class "BaseModel" (reportIncompatibleVariableOverride)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:42:5 - error: Instance variable "model_config" overrides class variable of same name in class "BaseModel" (reportIncompatibleVariableOverride)
+  /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/soup_queue/models.py:48:5 - error: Instance variable "model_config" overrides class variable of same name in class "BaseModel" (reportIncompatibleVariableOverride)
+5 errors, 0 warnings, 0 notes

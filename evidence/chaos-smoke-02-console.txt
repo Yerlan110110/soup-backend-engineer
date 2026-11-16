@@ -1,0 +1,62 @@
+{"event": "start", "jobs": 300, "kill_interval": 0.5, "seed": 40, "timeout": 240.0, "utc": "2026-11-16T11:32:16.071965+00:00", "workers": 8}
+{"event": "key_conflict_checked", "status": 409, "utc": "2026-11-16T11:32:16.541426+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 14, "utc": "2026-11-16T11:32:16.567450+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 4, "utc": "2026-11-16T11:32:16.596174+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 84, "utc": "2026-11-16T11:32:16.618530+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 16, "utc": "2026-11-16T11:32:16.641697+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 87, "utc": "2026-11-16T11:32:16.707347+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 24, "utc": "2026-11-16T11:32:16.731866+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 81, "utc": "2026-11-16T11:32:16.755414+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 308, "utc": "2026-11-16T11:32:16.779326+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 177, "utc": "2026-11-16T11:32:16.802810+00:00"}
+{"event": "SIGKILL", "old_pid": 31839, "replacement_pid": 31847, "slot": 0, "utc": "2026-11-16T11:32:16.826393+00:00"}
+{"acknowledged_keys": 300, "event": "producers_finished", "utc": "2026-11-16T11:32:16.837307+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 41, "utc": "2026-11-16T11:32:16.854945+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 207, "utc": "2026-11-16T11:32:16.877396+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 62, "utc": "2026-11-16T11:32:16.901253+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 135, "utc": "2026-11-16T11:32:16.924658+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 208, "utc": "2026-11-16T11:32:16.994073+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 268, "utc": "2026-11-16T11:32:17.016341+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 163, "utc": "2026-11-16T11:32:17.038879+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 321, "utc": "2026-11-16T11:32:17.061595+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 76, "utc": "2026-11-16T11:32:17.084698+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 90, "utc": "2026-11-16T11:32:17.107207+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 307, "utc": "2026-11-16T11:32:17.131801+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 134, "utc": "2026-11-16T11:32:17.177686+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 329, "utc": "2026-11-16T11:32:17.227189+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 224, "utc": "2026-11-16T11:32:17.272285+00:00"}
+{"event": "SIGKILL", "old_pid": 31842, "replacement_pid": 31849, "slot": 3, "utc": "2026-11-16T11:32:17.281369+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 300, "utc": "2026-11-16T11:32:17.296185+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 118, "utc": "2026-11-16T11:32:17.320047+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 348, "utc": "2026-11-16T11:32:17.343491+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 229, "utc": "2026-11-16T11:32:17.367032+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 198, "utc": "2026-11-16T11:32:17.415862+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 136, "utc": "2026-11-16T11:32:17.439795+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 166, "utc": "2026-11-16T11:32:17.463049+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 289, "utc": "2026-11-16T11:32:17.530195+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 174, "utc": "2026-11-16T11:32:17.578096+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 315, "utc": "2026-11-16T11:32:17.600143+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 187, "utc": "2026-11-16T11:32:17.645914+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 176, "utc": "2026-11-16T11:32:17.670057+00:00"}
+{"event": "SIGKILL", "old_pid": 31844, "replacement_pid": 31850, "slot": 5, "utc": "2026-11-16T11:32:17.710400+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 192, "utc": "2026-11-16T11:32:17.787088+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 350, "utc": "2026-11-16T11:32:17.810019+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 220, "utc": "2026-11-16T11:32:17.900164+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 237, "utc": "2026-11-16T11:32:17.922302+00:00"}
+{"event": "cancel_ack", "generation": 0, "job_id": 283, "utc": "2026-11-16T11:32:17.992631+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 242, "utc": "2026-11-16T11:32:18.015795+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 272, "utc": "2026-11-16T11:32:18.110393+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 264, "utc": "2026-11-16T11:32:18.133876+00:00"}
+{"event": "SIGKILL", "old_pid": 31846, "replacement_pid": 31851, "slot": 7, "utc": "2026-11-16T11:32:18.169411+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 281, "utc": "2026-11-16T11:32:18.250336+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 320, "utc": "2026-11-16T11:32:18.319085+00:00"}
+{"active": 22, "attempts": 257, "duplicates": 405, "effects": 227, "event": "progress", "jobs": 300, "kills": 4, "utc": "2026-11-16T11:32:18.332314+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 317, "utc": "2026-11-16T11:32:18.366079+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 345, "utc": "2026-11-16T11:32:18.436608+00:00"}
+{"event": "cancel_ack", "generation": 1, "job_id": 346, "utc": "2026-11-16T11:32:18.483301+00:00"}
+{"event": "SIGKILL", "old_pid": 31841, "replacement_pid": 31853, "slot": 2, "utc": "2026-11-16T11:32:18.736387+00:00"}
+{"event": "SIGKILL", "old_pid": 31849, "replacement_pid": 31854, "slot": 3, "utc": "2026-11-16T11:32:19.151554+00:00"}
+{"event": "SIGKILL", "old_pid": 31851, "replacement_pid": 31856, "slot": 7, "utc": "2026-11-16T11:32:19.679568+00:00"}
+{"event": "SIGKILL", "old_pid": 31847, "replacement_pid": 31858, "slot": 0, "utc": "2026-11-16T11:32:20.253495+00:00"}
+{"active": 0, "attempts": 272, "duplicates": 880, "effects": 244, "event": "progress", "jobs": 300, "kills": 8, "utc": "2026-11-16T11:32:20.333380+00:00"}
+{"attempts": 272, "cancel_acks": 48, "cancel_conflicts": 98, "cancelled": 48, "duplicate_posts": 880, "effects": 244, "elapsed_s": 4.646808542000144, "event": "PASS", "failed": 8, "invariants": "all checked", "jobs": 300, "kills": 8, "running_cancels": 20, "succeeded": 244, "transient_errors": 0, "utc": "2026-11-16T11:32:20.718744+00:00"}

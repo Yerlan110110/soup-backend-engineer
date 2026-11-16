@@ -1,0 +1,32 @@
+name: soup-queue
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - queue-data:/data
+    environment:
+      QUEUE_DB: /data/queue.sqlite
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+  worker:
+    build: .
+    command: ["python", "-m", "soup_queue.worker"]
+    volumes:
+      - queue-data:/data
+    environment:
+      QUEUE_DB: /data/queue.sqlite
+      QUEUE_LEASE_MS: "3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    deploy:
+      replicas: 4
+    restart: unless-stopped
+volumes:
+  queue-data:

@@ -1,0 +1,2 @@
+tests/test_oracle.py:10:121: E501 Line too long (143 > 120)
+Found 1 error.

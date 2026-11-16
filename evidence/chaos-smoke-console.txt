@@ -1,0 +1,723 @@
+{"event": "start", "jobs": 300, "kill_interval": 0.5, "seed": 40, "timeout": 240.0, "utc": "2026-11-16T11:30:21.035857+00:00", "workers": 8}
+{"elapsed_s": 1.0382169590011472, "error": "unhandled errors in a TaskGroup (1 sub-exception)", "event": "FAIL", "exception": "ExceptionGroup", "utc": "2026-11-16T11:30:22.074237+00:00"}
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness │
+│ /chaos.py:157 in main                                                        │
+│                                                                              │
+│   154 ) -> None:                                                             │
+│   155 │   if jobs < 1 or workers < 1 or kill_interval <= 0 or timeout <= 0:  │
+│   156 │   │   raise typer.BadParameter("jobs, workers, timeout and kill      │
+│       interval must be positive")                                            │
+│ ❱ 157 │   anyio.run(run, ChaosConfig(jobs, workers, seed, timeout,           │
+│       kill_interval, Path(output)))                                          │
+│   158                                                                        │
+│   159                                                                        │
+│   160 if __name__ == "__main__":                                             │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3.13/s │
+│ ite-packages/anyio/_core/_eventloop.py:83 in run                             │
+│                                                                              │
+│    80 │                                                                      │
+│    81 │   try:                                                               │
+│    82 │   │   backend_options = backend_options or {}                        │
+│ ❱  83 │   │   return async_backend.run(func, args, {}, backend_options)      │
+│    84 │   finally:                                                           │
+│    85 │   │   reset_current_async_library(token)                             │
+│    86                                                                        │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3.13/s │
+│ ite-packages/anyio/_backends/_asyncio.py:2621 in run                         │
+│                                                                              │
+│   2618 │   │   │   │   loop_factory = winloop.new_event_loop                 │
+│   2619 │   │                                                                 │
+│   2620 │   │   with Runner(debug=debug, loop_factory=loop_factory) as        │
+│        runner:                                                               │
+│ ❱ 2621 │   │   │   return runner.run(wrapper())                              │
+│   2622 │                                                                     │
+│   2623 │   @classmethod                                                      │
+│   2624 │   def current_token(cls) -> object:                                 │
+│                                                                              │
+│ /Users/yerlan/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/ │
+│ python3.13/asyncio/runners.py:119 in run                                     │
+│                                                                              │
+│   116 │   │                                                                  │
+│   117 │   │   self._interrupt_count = 0                                      │
+│   118 │   │   try:                                                           │
+│ ❱ 119 │   │   │   return self._loop.run_until_complete(task)                 │
+│   120 │   │   except exceptions.CancelledError:                              │
+│   121 │   │   │   if self._interrupt_count > 0:                              │
+│   122 │   │   │   │   uncancel = getattr(task, "uncancel", None)             │
+│                                                                              │
+│ /Users/yerlan/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/ │
+│ python3.13/asyncio/base_events.py:726 in run_until_complete                  │
+│                                                                              │
+│    723 │   │   if not future.done():                                         │
+│    724 │   │   │   raise RuntimeError('Event loop stopped before Future      │
+│        completed.')                                                          │
+│    725 │   │                                                                 │
+│ ❱  726 │   │   return future.result()                                        │
+│    727 │                                                                     │
+│    728 │   def stop(self):                                                   │
+│    729 │   │   """Stop running the event loop.                               │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3.13/s │
+│ ite-packages/anyio/_backends/_asyncio.py:2604 in wrapper                     │
+│                                                                              │
+│   2601 │   │   │   _task_states[task] = TaskState(None, None)                │
+│   2602 │   │   │                                                             │
+│   2603 │   │   │   try:                                                      │
+│ ❱ 2604 │   │   │   │   return await func(*args)                              │
+│   2605 │   │   │   finally:                                                  │
+│   2606 │   │   │   │   del _task_states[task]                                │
+│   2607                                                                       │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness │
+│ /chaos.py:46 in run                                                          │
+│                                                                              │
+│    43 │   │   )                                                              │
+│    44 │   │   started = time.monotonic()                                     │
+│    45 │   │   try:                                                           │
+│ ❱  46 │   │   │   await scenario(config, directory, evidence)                │
+│    47 │   │   except BaseException as exc:                                   │
+│    48 │   │   │   # Top-level evidence boundary: record                      │
+│       failures/cancellation, then re-raise unchanged.                        │
+│    49 │   │   │   evidence.emit(                                             │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/harness │
+│ /chaos.py:75 in scenario                                                     │
+│                                                                              │
+│    72 │   │   │   │   kills.append(old)                                      │
+│    73 │   │   │   │   evidence.emit("SIGKILL", old_pid=old,                  │
+│       replacement_pid=new, slot=slot)                                        │
+│    74 │   │                                                                  │
+│ ❱  75 │   │   async with anyio.create_task_group() as group:                 │
+│    76 │   │   │   group.start_soon(traffic.produce)                          │
+│    77 │   │   │   group.start_soon(traffic.repeat, 0)                        │
+│    78 │   │   │   group.start_soon(traffic.repeat, 1)                        │
+│                                                                              │
+│ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3.13/s │
+│ ite-packages/anyio/_backends/_asyncio.py:871 in __aexit__                    │
+│                                                                              │
+│    868 │   │   │   │   │   # added to self._exceptions so it's ok to break   │
+│        exception                                                             │
+│    869 │   │   │   │   │   # chaining and avoid adding a "During handling of │
+│        above..."                                                             │
+│    870 │   │   │   │   │   # for each nesting level.                         │
+│ ❱  871 │   │   │   │   │   raise BaseExceptionGroup(                         │
+│    872 │   │   │   │   │   │   "unhandled errors in a TaskGroup",            │
+│        self._exceptions                                                      │
+│    873 │   │   │   │   │   ) from None                                       │
+│    874 │   │   │   │   elif exc_val:                                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+
+╭────────────────────────────── Sub-exception #1 ──────────────────────────────╮
+│ ╭─────────────────── Traceback (most recent call last) ────────────────────╮ │
+│ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3. │ │
+│ │ 13/site-packages/anyio/_core/_tasks.py:327 in _run_coro                  │ │
+│ │                                                                          │ │
+│ │   324 │   │                                                              │ │
+│ │   325 │   │   with self._cancel_scope:                                   │ │
+│ │   326 │   │   │   try:                                                   │ │
+│ │ ❱ 327 │   │   │   │   retval = await self._coro                          │ │
+│ │   328 │   │   │   except BaseException as exc:                           │ │
+│ │   329 │   │   │   │   self._exception = exc                              │ │
+│ │   330 │   │   │   │   raise                                              │ │
+│ │                                                                          │ │
+│ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue/har │ │
+│ │ ness/traffic.py:66 in produce                                            │ │
+│ │                                                                          │ │
+│ │    63 │   │   │   for index in range(offset, self.total, 16):            │ │
+│ │    64 │   │   │   │   await self.submit(index)                           │ │
+│ │    65 │   │                                                              │ │
+│ │ ❱  66 │   │   async with anyio.create_task_group() as group:             │ │
+│ │    67 │   │   │   for offset in range(16):                               │ │
+│ │    68 │   │   │   │   group.start_soon(lane, offset)                     │ │
+│ │    69 │   │   self.produced = True                                       │ │
+│ │                                                                          │ │
+│ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/python3. │ │
+│ │ 13/site-packages/anyio/_backends/_asyncio.py:871 in __aexit__            │ │
+│ │                                                                          │ │
+│ │    868 │   │   │   │   │   # added to self._exceptions so it's ok to     │ │
+│ │        break exception                                                   │ │
+│ │    869 │   │   │   │   │   # chaining and avoid adding a "During         │ │
+│ │        handling of above..."                                             │ │
+│ │    870 │   │   │   │   │   # for each nesting level.                     │ │
+│ │ ❱  871 │   │   │   │   │   raise BaseExceptionGroup(                     │ │
+│ │    872 │   │   │   │   │   │   "unhandled errors in a TaskGroup",        │ │
+│ │        self._exceptions                                                  │ │
+│ │    873 │   │   │   │   │   ) from None                                   │ │
+│ │    874 │   │   │   │   elif exc_val:                                     │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│ ExceptionGroup: unhandled errors in a TaskGroup (10 sub-exceptions)          │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #1 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #2 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #3 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #4 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #5 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #6 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #7 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #8 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭──────────────────────────── Sub-exception #9 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+│                                                                              │
+│ ╭─────────────────────────── Sub-exception #10 ────────────────────────────╮ │
+│ │ ╭───────────────── Traceback (most recent call last) ──────────────────╮ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/anyio/_core/_tasks.py:327 in _run_coro          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │   324 │   │                                                          │ │ │
+│ │ │   325 │   │   with self._cancel_scope:                               │ │ │
+│ │ │   326 │   │   │   try:                                               │ │ │
+│ │ │ ❱ 327 │   │   │   │   retval = await self._coro                      │ │ │
+│ │ │   328 │   │   │   except BaseException as exc:                       │ │ │
+│ │ │   329 │   │   │   │   self._exception = exc                          │ │ │
+│ │ │   330 │   │   │   │   raise                                          │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:64 in lane                                       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    61 │   async def produce(self) -> None:                           │ │ │
+│ │ │    62 │   │   async def lane(offset: int) -> None:                   │ │ │
+│ │ │    63 │   │   │   for index in range(offset, self.total, 16):        │ │ │
+│ │ │ ❱  64 │   │   │   │   await self.submit(index)                       │ │ │
+│ │ │    65 │   │                                                          │ │ │
+│ │ │    66 │   │   async with anyio.create_task_group() as group:         │ │ │
+│ │ │    67 │   │   │   for offset in range(16):                           │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/outputs/soup-queue │ │ │
+│ │ │ /harness/traffic.py:45 in submit                                     │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    42 │   │   │   │   │   content=spec_for(index).model_dump_json(), │ │ │
+│ │ │    43 │   │   │   │   )                                              │ │ │
+│ │ │    44 │   │   │   │   if response.status_code != 503:                │ │ │
+│ │ │ ❱  45 │   │   │   │   │   response.raise_for_status()                │ │ │
+│ │ │    46 │   │   │   │   │   job =                                      │ │ │
+│ │ │       Job.model_validate_json(response.content)                      │ │ │
+│ │ │    47 │   │   │   │   │   if index in self.ids and self.ids[index]   │ │ │
+│ │ │       != job.id:                                                     │ │ │
+│ │ │    48 │   │   │   │   │   │   raise HarnessViolation(f"Retry created │ │ │
+│ │ │       another job for key {index}")                                  │ │ │
+│ │ │                                                                      │ │ │
+│ │ │ /Users/yerlan/Documents/Codex/2026-11-16/new-chat/work/venv/lib/pyth │ │ │
+│ │ │ on3.13/site-packages/httpx2/_models.py:841 in raise_for_status       │ │ │
+│ │ │                                                                      │ │ │
+│ │ │    838 │   │   }                                                     │ │ │
+│ │ │    839 │   │   error_type = error_types.get(status_class, "Invalid   │ │ │
+│ │ │        status code")                                                 │ │ │
+│ │ │    840 │   │   message = message.format(self, error_type=error_type) │ │ │
+│ │ │ ❱  841 │   │   raise HTTPStatusError(message, request=request,       │ │ │
+│ │ │        response=self)                                                │ │ │
+│ │ │    842 │                                                             │ │ │
+│ │ │    843 │   def json(self, **kwargs: Any) -> Any:                     │ │ │
+│ │ │    844 │   │   return jsonlib.loads(self.content, **kwargs)          │ │ │
+│ │ ╰──────────────────────────────────────────────────────────────────────╯ │ │
+│ │ HTTPStatusError: Client error '422 Unprocessable Content' for url        │ │
+│ │ 'http://127.0.0.1:59362/jobs'                                            │ │
+│ │ For more information check:                                              │ │
+│ │ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422             │ │
+│ ╰──────────────────────────────────────────────────────────────────────────╯ │
+╰──────────────────────────────────────────────────────────────────────────────╯

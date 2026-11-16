@@ -1,0 +1,4 @@
+{"owner": "32171-0ff39ca27a964e91bf3ddd3716f75bb4", "lease_ms": 1000, "event": "worker_started", "level": "info", "timestamp": "2026-11-16T11:34:43.637493Z"}
+{"job_id": 1, "generation": 2, "owner": "32171-0ff39ca27a964e91bf3ddd3716f75bb4", "event": "job_claimed", "level": "info", "timestamp": "2026-11-16T11:34:44.522638Z"}
+{"job_id": 1, "generation": 2, "committed": true, "event": "attempt_finished", "level": "info", "timestamp": "2026-11-16T11:34:46.136752Z"}
+{"owner": "32171-0ff39ca27a964e91bf3ddd3716f75bb4", "event": "worker_stopped", "level": "info", "timestamp": "2026-11-16T11:34:46.166577Z"}

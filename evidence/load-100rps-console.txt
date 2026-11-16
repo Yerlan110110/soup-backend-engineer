@@ -1,0 +1,3 @@
+{"event": "start", "mix": "50% create / 20% get / 20% list / 10% cancel; open loop", "rps": 100, "seconds": 60, "utc": "2026-11-16T11:42:38.855753+00:00", "workers": 4}
+{"achieved_rps": 100.0085075303841, "elapsed_s": 59.99489591600104, "errors": 0, "event": "measurements", "final_active": 0, "final_effects": 2420, "final_jobs": 3020, "http_statuses": "{\"201\": 3000, \"200\": 3000}", "max_dispatch_lag_ms": 6.9891250004729955, "p50_ms": 4.134165999857942, "p95_ms": 6.50270799997088, "p99_ms": 9.527250000246568, "requests": 6000, "utc": "2026-11-16T11:43:39.739089+00:00"}
+{"event": "PASS", "interpretation": "local mixed-workload measurement, not production certification", "utc": "2026-11-16T11:43:39.739399+00:00"}

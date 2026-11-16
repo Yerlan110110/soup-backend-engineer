@@ -1,0 +1,15 @@
+harness/load.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+harness/load.py:50:121: E501 Line too long (157 > 120)
+harness/load.py:76:121: E501 Line too long (127 > 120)
+harness/load.py:91:121: E501 Line too long (137 > 120)
+harness/load.py:108:121: E501 Line too long (211 > 120)
+harness/load.py:109:121: E501 Line too long (124 > 120)
+harness/load.py:112:121: E501 Line too long (455 > 120)
+harness/oracle.py:86:121: E501 Line too long (121 > 120)
+soup_queue/api.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+soup_queue/config.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+soup_queue/models.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests/test_fencing.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+tests/test_storage.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+Found 13 errors.
+[*] 6 fixable with `--fix`.

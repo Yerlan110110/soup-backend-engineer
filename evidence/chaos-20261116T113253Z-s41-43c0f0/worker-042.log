@@ -1,0 +1,2 @@
+{"owner": "32098-a96e159eee464d9089dbb78fcc30def4", "lease_ms": 1000, "event": "worker_started", "level": "info", "timestamp": "2026-11-16T11:34:02.132074Z"}
+{"owner": "32098-a96e159eee464d9089dbb78fcc30def4", "event": "worker_stopped", "level": "info", "timestamp": "2026-11-16T11:34:06.525686Z"}

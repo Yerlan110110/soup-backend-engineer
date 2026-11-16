@@ -1,0 +1,4 @@
+Installed 6 packages in 13ms
+PASS: compose.yaml validates against the official Compose JSON schema.
+Configured workers: 4
+Container build/start not executed: Docker runtime unavailable.
